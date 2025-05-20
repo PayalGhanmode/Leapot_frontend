@@ -1,0 +1,225 @@
+/* UserStyles.css */
+
+/* Container for the entire components */
+div {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 10px 20px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Error message */
+span {
+  font-size: 0.85rem;
+  margin-top: 3px;
+  color: #d32f2f;
+}
+
+/* Submit button */
+button[type="submit"] {
+  width: 120px;
+  align-self: center;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #303f9f;
+}
+
+/* Search and filter container */
+div > input[type="text"],
+div > select {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+div > input[type="text"]:focus,
+div > select:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+}
+
+th, td {
+  text-align: center;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  color: #444;
+}
+
+th {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody tr:hover {
+  background-color: #e8eaf6;
+  cursor: pointer;
+}
+
+/* Buttons in table */
+button {
+  margin: 0 5px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  filter: brightness(0.9);
+}
+
+button:focus {
+  outline: 2px solid #3f51b5;
+}
+
+button:nth-child(1) { /* Delete button */
+  background-color: #d32f2f;
+  color: white;
+}
+
+button:nth-child(1):hover {
+  background-color: #b71c1c;
+}
+
+button:nth-child(2) { /* Update button */
+  background-color: #1976d2;
+  color: white;
+}
+
+button:nth-child(2):hover {
+  background-color: #0d47a1;
+}
+
+/* Save and Cancel buttons when editing */
+td button:first-child {
+  background-color: #388e3c;
+  color: white;
+}
+
+td button:first-child:hover {
+  background-color: #2e7d32;
+}
+
+td button:last-child {
+  background-color: #fbc02d;
+  color: #333;
+}
+
+td button:last-child:hover {
+  background-color: #f9a825;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  tr {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+  td {
+    border: none;
+    padding: 10px 0;
+    position: relative;
+    text-align: left;
+  }
+  td::before {
+    position: absolute;
+    left: 15px;
+    font-weight: 600;
+    color: #555;
+  }
+  td:nth-of-type(1)::before { content: "First Name"; }
+  td:nth-of-type(2)::before { content: "Last Name"; }
+  td:nth-of-type(3)::before { content: "Email"; }
+  td:nth-of-type(4)::before { content: "Group"; }
+  td:nth-of-type(5)::before { content: "Actions"; }
+  button {
+    margin: 5px 0 0 0;
+  }
+}
