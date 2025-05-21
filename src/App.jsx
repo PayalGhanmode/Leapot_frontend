@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
-import UserForm from './components/UserForm';
-import UserTable from './components/UserTable';
+import React from 'react';
+import UserManagement from './components/UserManagement';  
 
 function App() {
-  const [refresh, setRefresh] = useState(false);
-
-  const handleUserAdded = () => {
-    setRefresh(!refresh); 
-  };
-
   return (
     <div>
-      <h1>User Management</h1>
-      <UserForm onUserAdded={handleUserAdded} />
-      <UserTable refresh={refresh} />
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        User Management
+      </h1>
+      <UserManagement />
     </div>
   );
 }

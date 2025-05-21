@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import validateUser from '../utils/Validate'; // Make sure this function is correctly implemented
-import { addUser } from '../api'; // Make sure this API is correctly configured
-import './style.css'; // Your custom styles (optional)
+import validateUser from '../utils/Validate'; 
+import { addUser } from '../api'; 
+import './style.css';
 
-const UserForm = ({ onUserAdded }) => {
+const UserForm = ({ onUserAdded, onCancel }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,23 +16,21 @@ const UserForm = ({ onUserAdded }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({}); // Clear previous errors
+    setErrors({});
 
     const validationErrors = validateUser(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      console.log("helloo");
-      
       return;
     }
 
     try {
-      const response = await addUser(formData); // API call to add user
+      const response = await addUser(formData);
 
       Swal.fire({
         icon: 'success',
@@ -62,6 +60,7 @@ const UserForm = ({ onUserAdded }) => {
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
+          className={errors.firstName ? 'input-error' : ''}
         />
         {errors.firstName && <span className="error-text">{errors.firstName}</span>}
       </div>
@@ -73,6 +72,7 @@ const UserForm = ({ onUserAdded }) => {
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
+          className={errors.lastName ? 'input-error' : ''}
         />
         {errors.lastName && <span className="error-text">{errors.lastName}</span>}
       </div>
@@ -84,13 +84,19 @@ const UserForm = ({ onUserAdded }) => {
           name="email"
           value={formData.email}
           onChange={handleChange}
+          className={errors.email ? 'input-error' : ''}
         />
         {errors.email && <span className="error-text">{errors.email}</span>}
       </div>
 
       <div className="form-group">
         <label>Group:</label>
-        <select name="group" value={formData.group} onChange={handleChange}>
+        <select
+          name="group"
+          value={formData.group}
+          onChange={handleChange}
+          className={errors.group ? 'input-error' : ''}
+        >
           <option value="">Select Group</option>
           <option value="CSE">CSE</option>
           <option value="MECH">MECH</option>
@@ -99,7 +105,10 @@ const UserForm = ({ onUserAdded }) => {
         {errors.group && <span className="error-text">{errors.group}</span>}
       </div>
 
-      <button type="submit" className="submit-btn">Add User</button>
+      <div className="form-actions">
+        <button type="submit" className="submit-btn">Add User</button>
+        <button type="button" className="cancel-btn" onClick={onCancel}>Cancel</button>
+      </div>
     </form>
   );
 };

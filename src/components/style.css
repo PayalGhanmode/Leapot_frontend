@@ -1,225 +1,315 @@
-/* UserStyles.css */
-
-/* Container for the entire components */
-div {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* --- General Container --- */
+.user-management-container {
   max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fefefe;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-}
-
-/* Headings */
-h2 {
-  text-align: center;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
 }
 
-/* Form styling */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 10px 20px;
-  background: #fafafa;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-
-form div {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-  color: #555;
-}
-
-input[type="text"],
-input[type="email"],
-select {
-  padding: 8px 10px;
-  font-size: 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-select:focus {
-  border-color: #3f51b5;
-  outline: none;
-}
-
-/* Error message */
-span {
-  font-size: 0.85rem;
-  margin-top: 3px;
-  color: #d32f2f;
-}
-
-/* Submit button */
-button[type="submit"] {
-  width: 120px;
-  align-self: center;
-  background-color: #3f51b5;
+/* --- BUTTON --- */
+.user-btn {
+  background-color: #4f46e5; /* Indigo */
   color: white;
+  font-weight: 600;
   border: none;
-  padding: 10px 0;
-  font-size: 1.1rem;
-  border-radius: 5px;
+  padding: 10px 22px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 2px 6px rgb(79 70 229 / 0.3);
+  margin-bottom: 20px;
+}
+.user-btn:hover {
+  background-color: #4338ca;
 }
 
-button[type="submit"]:hover {
-  background-color: #303f9f;
+/* --- MODAL OVERLAY --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.48);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* Search and filter container */
-div > input[type="text"],
-div > select {
-  padding: 8px 12px;
-  font-size: 1rem;
-  border: 1.5px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
-  transition: border-color 0.3s ease;
+/* --- MODAL CONTENT --- */
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgb(0 0 0 / 0.2);
+  max-width: 480px;
+  width: 90%;
+  padding: 28px 32px;
+  position: relative;
+  animation: fadeInScale 0.25s ease forwards;
 }
 
-div > input[type="text"]:focus,
-div > select:focus {
-  border-color: #3f51b5;
-  outline: none;
+/* Modal appear animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* Table styling */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-}
-
-th, td {
+/* --- FORM STYLES --- */
+.user-form h2 {
+  margin-bottom: 20px;
+  color: #222;
+  font-weight: 700;
   text-align: center;
-  padding: 12px 15px;
-  border-bottom: 1px solid #ddd;
-  font-size: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
   color: #444;
 }
 
-th {
-  background-color: #3f51b5;
-  color: white;
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px #4f46e5aa;
+}
+
+.input-error {
+  border-color: #e02424 !important;
+}
+
+.error-text {
+  color: #e02424;
+  font-size: 0.875rem;
+  margin-top: 4px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-tbody tr:hover {
-  background-color: #e8eaf6;
+/* --- FORM BUTTONS --- */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.submit-btn,
+.cancel-btn {
+  flex: 1;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 0;
+  border-radius: 6px;
   cursor: pointer;
-}
-
-/* Buttons in table */
-button {
-  margin: 0 5px;
-  padding: 6px 10px;
-  font-size: 0.9rem;
   border: none;
-  border-radius: 4px;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 4px 8px rgb(79 70 229 / 0.25);
+  margin: 0 6px;
+}
+
+.submit-btn {
+  background-color: #4f46e5;
+  color: white;
+}
+.submit-btn:hover {
+  background-color: #4338ca;
+}
+
+.cancel-btn {
+  background-color: #d1d5db;
+  color: #444;
+}
+.cancel-btn:hover {
+  background-color: #a3aab9;
+}
+
+/* --- USER TABLE CONTAINER --- */
+.user-table-container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 30px;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.08);
+}
+
+/* Title */
+.user-table-container h2 {
+  margin-bottom: 18px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.filter-input,
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1.6px solid #ccc;
+  font-size: 0.95rem;
+  width: 220px;
+  transition: border-color 0.2s ease;
+}
+.filter-input:focus,
+.filter-select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px #4f46e5aa;
+}
+
+/* USER TABLE */
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.user-table thead th {
+  background-color: #f4f4f8;
+  padding: 14px 16px;
+  font-weight: 600;
+  color: #555;
+  text-align: left;
+  border-radius: 8px 8px 0 0;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+.user-table tbody tr {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.04);
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+  cursor: default;
+}
+
+.user-table tbody tr:hover {
+  background-color: #f9f9ff;
+}
+
+.user-table tbody td {
+  padding: 12px 16px;
+  vertical-align: middle;
+  border: none;
+}
+
+/* Inputs inside editing row */
+.user-table tbody tr input[type="text"],
+.user-table tbody tr input[type="email"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+.user-table tbody tr input[type="text"]:focus,
+.user-table tbody tr input[type="email"]:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px #4f46e5aa;
+}
+
+/* ACTION BUTTONS */
+.action-btn {
+  padding: 6px 12px;
+  margin-left: 6px;
+  border-radius: 6px;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  filter: brightness(0.9);
-}
-
-button:focus {
-  outline: 2px solid #3f51b5;
-}
-
-button:nth-child(1) { /* Delete button */
-  background-color: #d32f2f;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
   color: white;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
 }
 
-button:nth-child(1):hover {
-  background-color: #b71c1c;
+.action-btn.edit {
+  background-color: #2563eb;
+}
+.action-btn.edit:hover {
+  background-color: #1e40af;
 }
 
-button:nth-child(2) { /* Update button */
-  background-color: #1976d2;
-  color: white;
+.action-btn.delete {
+  background-color: #dc2626;
+}
+.action-btn.delete:hover {
+  background-color: #991b1b;
 }
 
-button:nth-child(2):hover {
-  background-color: #0d47a1;
+.action-btn.save {
+  background-color: #16a34a;
+}
+.action-btn.save:hover {
+  background-color: #15803d;
 }
 
-/* Save and Cancel buttons when editing */
-td button:first-child {
-  background-color: #388e3c;
-  color: white;
+.action-btn.cancel {
+  background-color: #6b7280;
+}
+.action-btn.cancel:hover {
+  background-color: #4b5563;
 }
 
-td button:first-child:hover {
-  background-color: #2e7d32;
+/* NO USERS FOUND */
+.no-users {
+  text-align: center;
+  padding: 32px 0;
+  font-style: italic;
+  color: #777;
 }
 
-td button:last-child {
-  background-color: #fbc02d;
-  color: #333;
-}
-
-td button:last-child:hover {
-  background-color: #f9a825;
-}
-
-/* Responsive tweaks */
-@media (max-width: 600px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
+/* Responsive */
+@media (max-width: 620px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
   }
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
+  .filter-input, .filter-select {
+    width: 100%;
   }
-  tr {
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    background: #fff;
+  .action-btn {
+    margin: 4px 4px 0 0;
+    padding: 8px 10px;
+    font-size: 0.85rem;
   }
-  td {
-    border: none;
-    padding: 10px 0;
-    position: relative;
-    text-align: left;
+  .form-actions {
+    flex-direction: column;
   }
-  td::before {
-    position: absolute;
-    left: 15px;
-    font-weight: 600;
-    color: #555;
-  }
-  td:nth-of-type(1)::before { content: "First Name"; }
-  td:nth-of-type(2)::before { content: "Last Name"; }
-  td:nth-of-type(3)::before { content: "Email"; }
-  td:nth-of-type(4)::before { content: "Group"; }
-  td:nth-of-type(5)::before { content: "Actions"; }
-  button {
-    margin: 5px 0 0 0;
+  .submit-btn,
+  .cancel-btn {
+    margin: 6px 0 0 0 !important;
+    width: 100%;
   }
 }
