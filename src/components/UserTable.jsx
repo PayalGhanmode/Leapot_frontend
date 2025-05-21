@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { getUsers, deleteUser, updateUser } from '../api';  // make sure updateUser is imported
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { getUsers, deleteUser, updateUser } from "../api";
+import "./style.css";
+
 const UserTable = ({ refresh }) => {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState('');
-  const [groupFilter, setGroupFilter] = useState('');
-
-  // For update editing
+  const [search, setSearch] = useState("");
+  const [groupFilter, setGroupFilter] = useState("");
   const [editingUserId, setEditingUserId] = useState(null);
-  const [editFormData, setEditFormData] = useState({ firstName: '', lastName: '', email: '', group: '' });
+  const [editFormData, setEditFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    group: "",
+  });
 
   const fetchUsers = async () => {
     try {
-      console.log('Searching with:', { search, groupFilter });
       const data = await getUsers(search, groupFilter);
-      console.log('Users fetched:', data);
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching users:', error.message);
+      console.error("Error fetching users:", error.message);
     }
   };
 
@@ -30,7 +33,7 @@ const UserTable = ({ refresh }) => {
       await deleteUser(id);
       fetchUsers();
     } catch (error) {
-      console.error('Error deleting user:', error.message);
+      console.error("Error deleting user:", error.message);
     }
   };
 
@@ -49,48 +52,62 @@ const UserTable = ({ refresh }) => {
   };
 
   const handleEditChange = (e) => {
-    setEditFormData({ ...editFormData, [e.target.name]: e.target.value });
+    setEditFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleUpdate = async () => {
     try {
-      let res = await updateUser(editingUserId, editFormData);
-      console.log("resssssssss",res);
+      const res = await updateUser(editingUserId, editFormData);
 
       Swal.fire({
-               icon: 'success',
-        title: 'Success',
-              text: res.message,
-            });
-      
+        icon: "success",
+        title: "Success",
+        text: res.message || "User updated successfully",
+      });
+
       setEditingUserId(null);
       fetchUsers();
     } catch (error) {
-      console.error('Error updating user:', error.message);
+      console.error("Error updating user:", error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || "Failed to update user",
+      });
     }
   };
 
   return (
-    <div>
-      <h2>User List</h2>
+    <div className="user-table-container">
 
-      <div style={{ marginBottom: '1rem' }}>
+      <div
+        className="filters"
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          gap: "10px",
+          marginBottom: "15px",
+        }}
+      >
         <input
           type="text"
           placeholder="Search by name or email"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ marginRight: '8px' }}
+          className="filter-input"
         />
-        <select value={groupFilter} onChange={(e) => setGroupFilter(e.target.value)}>
+        <select
+          value={groupFilter}
+          onChange={(e) => setGroupFilter(e.target.value)}
+          className="filter-select"
+        >
           <option value="">All Groups</option>
           <option value="CSE">CSE</option>
           <option value="MECH">MECH</option>
           <option value="CIVIL">CIVIL</option>
         </select>
       </div>
-
-      <table border="1" cellPadding="5" cellSpacing="0">
+      <table className="user-table">
         <thead>
           <tr>
             <th>First Name</th>
@@ -138,8 +155,15 @@ const UserTable = ({ refresh }) => {
                     />
                   </td>
                   <td>
-                    <button onClick={handleUpdate}>Save</button>
-                    <button onClick={cancelEditing}>Cancel</button>
+                    <button className="action-btn save" onClick={handleUpdate}>
+                      Save
+                    </button>
+                    <button
+                      className="action-btn cancel"
+                      onClick={cancelEditing}
+                    >
+                      Cancel
+                    </button>
                   </td>
                 </tr>
               ) : (
@@ -149,15 +173,46 @@ const UserTable = ({ refresh }) => {
                   <td>{user.email}</td>
                   <td>{user.group}</td>
                   <td>
-                    <button onClick={() => handleDelete(user._id)}>Delete</button>{' '}
-                    <button onClick={() => startEditing(user)}>Update</button>
+                    <button
+                      className="action-btn edit"
+                      onClick={() => startEditing(user)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="action-btn delete"
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            handleDelete(user._id);
+                            Swal.fire(
+                              "Deleted!",
+                              "User has been deleted.",
+                              "success"
+                            );
+                          }
+                        });
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               )
             )
           ) : (
             <tr>
-              <td colSpan="5">No users found.</td>
+              <td colSpan="5" className="no-users">
+                No users found.
+              </td>
             </tr>
           )}
         </tbody>
